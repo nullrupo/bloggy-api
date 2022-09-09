@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ApI\BaseController as BaseController;
 use Validator;
-use App\Http\Resources\Blog as BlogResource;
 
 class BlogController extends Controller
 {
@@ -23,7 +21,6 @@ class BlogController extends Controller
         $blog = Blog::latest()->paginate(5);
         return view('blog.index',compact('blog'));
     }
- 
 
     public function create()
     {

@@ -34,4 +34,21 @@
             </div>
         </div>
     </div>
+    <h4>Display Comments</h4>
+  
+    @include('blog.comments', ['comments' => $blog->comments, 'blog_id' => $blog->id])
+   
+   <hr />
+   <form method="post" action="{{ route('comments.store') }}">
+       @csrf
+       <div class="form-group">
+           <textarea class="form-control" name="body"></textarea>
+           <input type="hidden" name="blog_id" value="{{ $blog->id }}" />
+       </div>
+       <div class="form-group">
+           <input type="submit" class="btn btn-success" value="Add Comment" />
+       </div>
+   </form>
+
+  <hr />
 @endsection
