@@ -22,3 +22,4 @@ Route::match(['get','post'],'register', 'App\Http\Controllers\API\RegisterContro
 Route::match(['get','post'],'login', 'App\Http\Controllers\API\RegisterController@login');
 Route::resource('blogs', 'App\Http\Controllers\API\BlogController');
 Route::resource('users', 'App\Http\Controllers\API\UserController');
+Route::resource('comments', 'App\Http\Controllers\API\CommentController');
