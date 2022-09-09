@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApI\BaseController as BaseController;
 use Validator;
-use App\Http\Resources\Product as ProductResource;
+use App\Http\Resources\Blog as BlogResource;
 
-class ProductController extends Controller
+class BlogController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
-        $this->middleware('permission:product-create', ['only' => ['create','store']]);
-        $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:blog-list|blog-create|blog-edit|blog-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:blog-create', ['only' => ['create','store']]);
+        $this->middleware('permission:blog-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:blog-delete', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $product = Product::latest()->paginate(5);
-        return view('product.index',compact('product'));
-        return $this->sendResponse(ProductResource::collection($product), 'Products retrieved successfully.');
+        $blog = Blog::latest()->paginate(5);
+        return view('blog.index',compact('blog'));
+        return $this->sendResponse(BlogResource::collection($blog), 'Blogs retrieved successfully.');
     }
  
 
 
     public function create()
     {
-        return view('product.create');
+        return view('blog.create');
     }
 
     public function store(Request $request, $validator)
@@ -41,25 +41,25 @@ class ProductController extends Controller
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
-        Product::create($request->all());
+        Blog::create($request->all());
 
-        return redirect()->route('product.index')
+        return redirect()->route('blog.index')
                          ->with('success','Entry created successfully.');
-        return $this->sendResponse(new ProductResource($product), 'Product created successfully.');
+        return $this->sendResponse(new BlogResource($blog), 'Blog created successfully.');
     } 
 
-    public function show(Product $product)
+    public function show(Blog $blog)
     {
-        return view('product.show',compact('product'));
-        return $this->sendResponse(new ProductResource($product), 'Product retrieved successfully.');
+        return view('blog.show',compact('blog'));
+        return $this->sendResponse(new BlogResource($blog), 'Blog retrieved successfully.');
     }
 
-    public function edit(Product $product)
+    public function edit(Blog $blog)
     {
-        return view('product.edit',compact('product'));
+        return view('blog.edit',compact('blog'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Blog $blog)
     {
         $validator = request()->validate([
             'name'         => 'required',
@@ -68,18 +68,18 @@ class ProductController extends Controller
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
-        $product->update($request->all());
+        $blog->update($request->all());
 
-        return redirect()->route('product.index')
+        return redirect()->route('blog.index')
                          ->with('success','Entry updated successfully');
-        return $this->sendResponse(new ProductResource($product), 'product updated successfully.');
+        return $this->sendResponse(new BlogResource($blog), 'blog updated successfully.');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Blog $blog)
     {
-        $product->delete();
-        return redirect()->route('product.index')
+        $blog->delete();
+        return redirect()->route('blog.index')
                          ->with('success','Entry deleted successfully');
-        return $this->sendResponse([], 'product deleted successfully.');                 
+        return $this->sendResponse([], 'blog deleted successfully.');                 
     }
 }

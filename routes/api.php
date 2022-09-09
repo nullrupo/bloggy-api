@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::match(['get','post'],'register', 'App\Http\Controllers\API\RegisterController@register');
 Route::match(['get','post'],'login', 'App\Http\Controllers\API\RegisterController@login');
-Route::resource('products', 'App\Http\Controllers\API\ProductController');
+Route::resource('blogs', 'App\Http\Controllers\API\BlogController');
 Route::resource('users', 'App\Http\Controllers\API\UserController');

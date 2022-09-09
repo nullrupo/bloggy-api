@@ -7,8 +7,8 @@
                 <h2>Inventory</h2>
             </div>
             <div class="pull-right">
-                @can('product-create')
-                <a class="btn btn-success" href="{{ route('product.create') }}"> Create New Entry</a>
+                @can('blog-create')
+                <a class="btn btn-success" href="{{ route('blog.create') }}"> Create New Entry</a>
                 @endcan
             </div>
         </div>
@@ -28,22 +28,22 @@
             <th width="50px">Detail</th>
             <th width="140px">Action</th>
         </tr>
-	    @foreach ($product as $product)
+	    @foreach ($blog as $blog)
 	    <tr>
-	        <td>{{ $product->id }}</td>
-	        <td>{{ $product->name }}</td>
-            <td>{{ $product->detail }}</td>
+	        <td>{{ $blog->id }}</td>
+	        <td>{{ $blog->name }}</td>
+            <td>{{ $blog->detail }}</td>
 	        <td>
-                <form action="{{ route('product.destroy',$product->id) }}" method="POST">
-                    <a class="btn btn-info" href="{{ route('product.show',$product->id) }}">Show</a>
-                    @can('product-edit')
-                    <a class="btn btn-primary" href="{{ route('product.edit',$product->id) }}">Edit</a>
+                <form action="{{ route('blog.destroy',$blog->id) }}" method="POST">
+                    <a class="btn btn-info" href="{{ route('blog.show',$blog->id) }}">Show</a>
+                    @can('blog-edit')
+                    <a class="btn btn-primary" href="{{ route('blog.edit',$blog->id) }}">Edit</a>
                     @endcan
 
 
                     @csrf
                     @method('DELETE')
-                    @can('product-delete')
+                    @can('blog-delete')
                     <button type="submit" class="btn btn-danger">Delete</button>
                     @endcan
                 </form>
