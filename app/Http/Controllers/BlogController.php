@@ -22,36 +22,29 @@ class BlogController extends Controller
     {
         $blog = Blog::latest()->paginate(5);
         return view('blog.index',compact('blog'));
-        return $this->sendResponse(BlogResource::collection($blog), 'Blogs retrieved successfully.');
     }
  
-
 
     public function create()
     {
         return view('blog.create');
     }
 
-    public function store(Request $request, $validator)
+    public function store(Request $request)
     {
-        $validator = request()->validate([
+        $this->validate($request, [
             'name'         => 'required',
             'detail'       => 'required',
         ]);
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
-        }
         Blog::create($request->all());
 
         return redirect()->route('blog.index')
                          ->with('success','Entry created successfully.');
-        return $this->sendResponse(new BlogResource($blog), 'Blog created successfully.');
     } 
 
     public function show(Blog $blog)
     {
         return view('blog.show',compact('blog'));
-        return $this->sendResponse(new BlogResource($blog), 'Blog retrieved successfully.');
     }
 
     public function edit(Blog $blog)
@@ -61,25 +54,20 @@ class BlogController extends Controller
 
     public function update(Request $request, Blog $blog)
     {
-        $validator = request()->validate([
+        $this->validate($request, [
             'name'         => 'required',
             'detail'       => 'required',
         ]);
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
-        }
         $blog->update($request->all());
 
         return redirect()->route('blog.index')
                          ->with('success','Entry updated successfully');
-        return $this->sendResponse(new BlogResource($blog), 'blog updated successfully.');
     }
 
     public function destroy(Blog $blog)
     {
         $blog->delete();
         return redirect()->route('blog.index')
-                         ->with('success','Entry deleted successfully');
-        return $this->sendResponse([], 'blog deleted successfully.');                 
+                         ->with('success','Entry deleted successfully');          
     }
 }
